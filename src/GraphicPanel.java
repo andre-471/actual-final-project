@@ -13,6 +13,7 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1000;
     private static final int SCREEN_HEIGHT = 1000;
     private ArrayList<Image> images;
+    private ArrayList<Vertex> vertices;
     private Thread thread;
 
     public GraphicPanel() {images = new ArrayList<>();
@@ -23,6 +24,8 @@ public class GraphicPanel extends JPanel implements Runnable {
             System.out.println(e.getMessage());
             System.exit(0);
         }
+        vertices = new ArrayList<>();
+        vertices.add(new Vertex(100, 400, 100));
 
         setUpPanel();
         setUpWindow();
@@ -62,6 +65,7 @@ public class GraphicPanel extends JPanel implements Runnable {
         g2D.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
         images.forEach(image -> image.draw(g2D));
+        vertices.forEach(vertex -> vertex.draw(g2D));
 
         g2D.setFont(new Font("Arial", Font.PLAIN, 18));
         g2D.setColor(Color.red);
@@ -80,9 +84,9 @@ public class GraphicPanel extends JPanel implements Runnable {
 
     private void setUpPanel() {
         this.setDoubleBuffered(true);
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.WHITE);
         this.setFocusable(true);
-        this.requestFocus();
+        this.requestFocusInWindow();
     }
 
     private void setUpWindow() {

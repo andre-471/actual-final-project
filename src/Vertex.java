@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Vertex {
     private double x;
     private double y;
@@ -9,5 +11,7 @@ public class Vertex {
         this.z = z;
     }
 
-
+    public void draw(Graphics2D g2D) {
+        g2D.fillRect((int) x, (int) y, 1, 1);
+    }
 }
