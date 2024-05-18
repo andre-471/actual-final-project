@@ -1,8 +1,5 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,15 +10,16 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final int SCREEN_WIDTH = 1000;
     private static final int SCREEN_HEIGHT = 1000;
     private ArrayList<Vertex> vertices;
-    private Polyhedron triangle;
+    private Polyhedron something;
     private Thread thread;
     private KeyHandler keyHandler;
+    private MouseHandler mouseHandler;
 
     public GraphicPanel() {
         vertices = new ArrayList<>();
         vertices.add(new Vertex(100, 400, 100));
 
-        triangle = new Polyhedron(new Vertex(100, 100, 0),
+        something = new Polyhedron(new Vertex(100, 100, 0),
                 new Vertex(200, 100, 0),
                 new Vertex(200, 200, 0),
                 new Vertex(100, 200, 0),
@@ -47,25 +45,33 @@ public class GraphicPanel extends JPanel implements Runnable {
             previousTime = currentTime;
 
             if (delta >= frameInterval) {
+//                System.out.println(mouseHandler.leftMousePressed());
+                if (mouseHandler.leftMousePressed()) {
+                    int dx = this.getMousePosition().x - mouseHandler.getLastPoint().x;
+                    int dy = this.getMousePosition().y - mouseHandler.getLastPoint().y;
+                    mouseHandler.setLastPoint(getMousePosition());
+                    something.rotateYAxis(dx, 150, 50);
+                    something.rotateXAxis(-dy, 150, 50);
+                }
+
                 if (keyHandler.keyWPressed()) {
-                    triangle.rotateXAxis(1, 150, 50);
+                    something.rotateXAxis(1, 150, 50);
                 }
                 if (keyHandler.keySPressed()) {
-                    triangle.rotateXAxis(-1, 150, 50);
+                    something.rotateXAxis(-1, 150, 50);
                 }
                 if (keyHandler.keyAPressed()) {
-                    triangle.rotateYAxis(-1, 150, 50);
+                    something.rotateYAxis(-1, 150, 50);
                 }
                 if (keyHandler.keyDPressed()) {
-                    triangle.rotateYAxis(1, 150, 50);
+                    something.rotateYAxis(1, 150, 50);
                 }
                 if (keyHandler.keyQPressed()) {
-                    triangle.rotateZAxis(-1, 150, 150);
+                    something.rotateZAxis(-1, 150, 150);
                 }
                 if (keyHandler.keyEPressed()) {
-                    triangle.rotateZAxis(1, 150, 150);
+                    something.rotateZAxis(1, 150, 150);
                 }
-//                triangle.rotateZAxis(1, 150, 150);
 
                 repaint();
 
@@ -82,7 +88,7 @@ public class GraphicPanel extends JPanel implements Runnable {
         g2D.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
         vertices.forEach(vertex -> vertex.draw(g2D));
-        triangle.draw(g2D);
+        something.draw(g2D);
     }
 
     private void setUpPanel() {
@@ -92,6 +98,8 @@ public class GraphicPanel extends JPanel implements Runnable {
         this.requestFocusInWindow();
         keyHandler = new KeyHandler();
         this.addKeyListener(keyHandler);
+        mouseHandler = new MouseHandler();
+        this.addMouseListener(mouseHandler);
     }
 
     private void setUpWindow() {

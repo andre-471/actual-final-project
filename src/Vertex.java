@@ -28,7 +28,7 @@ public class Vertex {
     }
 
 
-    public void rotateXAxis(int theta, int rY, int rZ) {
+    public void rotateXAxis(double theta, int rY, int rZ) {
         translate(0, -rY, -rZ);
         double thetaR = toRadians(theta);
         double yP = y * cos(thetaR) - z * sin(thetaR);
@@ -38,7 +38,7 @@ public class Vertex {
         translate(0, rY, rZ);
     }
 
-    public void rotateYAxis(int theta, int rX, int rZ) {
+    public void rotateYAxis(double theta, int rX, int rZ) {
         translate(-rX, 0, -rZ);
         double thetaR = toRadians(theta);
         double xP = x * cos(thetaR) + z * sin(thetaR);
@@ -48,7 +48,7 @@ public class Vertex {
         translate(rX, 0, rZ);
     }
 
-    public void rotateZAxis(int theta, int rX, int rY) {
+    public void rotateZAxis(double theta, int rX, int rY) {
         translate(-rX, -rY, 0);
         double thetaR = toRadians(theta);
         double xP = x * cos(thetaR) - y * sin(thetaR);

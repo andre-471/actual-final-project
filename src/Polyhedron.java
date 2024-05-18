@@ -17,19 +17,19 @@ public class Polyhedron {
         }
     }
 
-    public void rotateZAxis(int theta, int rX, int rY) {
+    public void rotateZAxis(double theta, int rX, int rY) {
         for (Vertex vertex : vertices) {
             vertex.rotateZAxis(theta, rX, rY);
         }
     }
 
-    public void rotateXAxis(int theta, int rY, int rZ) {
+    public void rotateXAxis(double theta, int rY, int rZ) {
         for (Vertex vertex : vertices) {
             vertex.rotateXAxis(theta, rY, rZ);
         }
     }
 
-    public void rotateYAxis(int theta, int rX, int rZ) {
+    public void rotateYAxis(double theta, int rX, int rZ) {
         for (Vertex vertex : vertices) {
             vertex.rotateYAxis(theta, rX, rZ);
         }

@@ -4,15 +4,9 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler extends KeyAdapter {
     private boolean keyW, keyA, keyS, keyD, keyQ, keyE;
+    private boolean upArrow, downArrow, leftArrow, rightArrow;
 
-    public KeyHandler() {
-        keyW = false;
-        keyA = false;
-        keyS = false;
-        keyD = false;
-        keyQ = false;
-        keyE = false;
-    }
+    public KeyHandler() {}
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -23,6 +17,10 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_D -> keyD = true;
             case KeyEvent.VK_Q -> keyQ = true;
             case KeyEvent.VK_E -> keyE = true;
+            case KeyEvent.VK_UP -> upArrow = true;
+            case KeyEvent.VK_DOWN -> downArrow = true;
+            case KeyEvent.VK_LEFT -> leftArrow = true;
+            case KeyEvent.VK_RIGHT -> rightArrow = true;
         }
     }
 
@@ -35,6 +33,10 @@ public class KeyHandler extends KeyAdapter {
             case KeyEvent.VK_D -> keyD = false;
             case KeyEvent.VK_Q -> keyQ = false;
             case KeyEvent.VK_E -> keyE = false;
+            case KeyEvent.VK_UP -> upArrow = false;
+            case KeyEvent.VK_DOWN -> downArrow = false;
+            case KeyEvent.VK_LEFT -> leftArrow = false;
+            case KeyEvent.VK_RIGHT -> rightArrow = false;
         }
     }
 
@@ -60,5 +62,21 @@ public class KeyHandler extends KeyAdapter {
 
     public boolean keyEPressed() {
         return keyE;
+    }
+
+    public boolean upArrowPressed() {
+        return upArrow;
+    }
+
+    public boolean downArrowPressed() {
+        return downArrow;
+    }
+
+    public boolean leftArrowPressed() {
+        return leftArrow;
+    }
+
+    public boolean rightArrowPressed() {
+        return rightArrow;
     }
 }
