@@ -21,6 +21,18 @@ public class Vertex {
         return new Point((int) x, (int) y);
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
     public void translate(int dx, int dy, int dz) {
         x += dx;
         y += dy;

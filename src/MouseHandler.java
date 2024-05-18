@@ -36,11 +36,11 @@ public class MouseHandler extends MouseAdapter {
         return leftMouse && inScreen;
     }
 
-    public Point getLastPoint() {
-        return lastPoint;
-    }
+    public Dimension getDifferenceSinceLastPoint(Point currPoint) {
+        int dx = currPoint.x - lastPoint.x;
+        int dy = currPoint.y - lastPoint.y;
+        lastPoint = currPoint;
 
-    public void setLastPoint(Point lastPoint) {
-        this.lastPoint = lastPoint;
+        return new Dimension(dx, dy);
     }
 }

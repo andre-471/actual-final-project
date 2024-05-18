@@ -7,6 +7,10 @@ public class Polyhedron {
         this.vertices = vertices;
     }
 
+    public void setVertices(Vertex[] vertices) {
+        this.vertices = vertices;
+    }
+
     public void draw(Graphics2D g2D) {
         for (int i = 0; i < vertices.length; i++) {
             vertices[i].draw(g2D);
