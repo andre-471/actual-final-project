@@ -15,6 +15,7 @@ public class GraphicPanel extends JPanel implements Runnable {
     private ArrayList<Vertex> vertices;
     private Polyhedron triangle;
     private Thread thread;
+    private KeyHandler keyHandler;
 
     public GraphicPanel() {
         vertices = new ArrayList<>();
@@ -46,9 +47,26 @@ public class GraphicPanel extends JPanel implements Runnable {
             previousTime = currentTime;
 
             if (delta >= frameInterval) {
-                triangle.rotateZAxis(1, 150, 150);
-                triangle.rotateYAxis(1, 150, 50);
-                triangle.rotateXAxis(1, 150, 50);
+                if (keyHandler.keyWPressed()) {
+                    triangle.rotateXAxis(1, 150, 50);
+                }
+                if (keyHandler.keySPressed()) {
+                    triangle.rotateXAxis(-1, 150, 50);
+                }
+                if (keyHandler.keyAPressed()) {
+                    triangle.rotateYAxis(-1, 150, 50);
+                }
+                if (keyHandler.keyDPressed()) {
+                    triangle.rotateYAxis(1, 150, 50);
+                }
+                if (keyHandler.keyQPressed()) {
+                    triangle.rotateZAxis(-1, 150, 150);
+                }
+                if (keyHandler.keyEPressed()) {
+                    triangle.rotateZAxis(1, 150, 150);
+                }
+//                triangle.rotateZAxis(1, 150, 150);
+
                 repaint();
 
                 delta = 0.0;
@@ -72,6 +90,8 @@ public class GraphicPanel extends JPanel implements Runnable {
         this.setBackground(Color.WHITE);
         this.setFocusable(true);
         this.requestFocusInWindow();
+        keyHandler = new KeyHandler();
+        this.addKeyListener(keyHandler);
     }
 
     private void setUpWindow() {

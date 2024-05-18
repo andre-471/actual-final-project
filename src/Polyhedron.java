@@ -34,4 +34,10 @@ public class Polyhedron {
             vertex.rotateYAxis(theta, rX, rZ);
         }
     }
+
+    public void translate(int dx, int dy, int dz) {
+        for (Vertex vertex : vertices) {
+            vertex.translate(dx, dy, dz);
+        }
+    }
 }
