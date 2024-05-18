@@ -12,21 +12,21 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final double NS = 1000000000.0;
     private static final int SCREEN_WIDTH = 1000;
     private static final int SCREEN_HEIGHT = 1000;
-    private ArrayList<Image> images;
     private ArrayList<Vertex> vertices;
+    private Polyhedron triangle;
     private Thread thread;
 
-    public GraphicPanel() {images = new ArrayList<>();
-        try {
-            images.add(new Image(ImageIO.read(new File("resources/treasure.jpg")), 0, 100, 100, 1000, 1000));
-            images.add(new Image(ImageIO.read(new File("resources/treasure.jpg")), 0, 300, 100, 1000, 1000));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.exit(0);
-        }
+    public GraphicPanel() {
         vertices = new ArrayList<>();
         vertices.add(new Vertex(100, 400, 100));
 
+        triangle = new Polyhedron(new Vertex(100, 100, 0),
+                new Vertex(200, 100, 0),
+                new Vertex(200, 200, 0),
+                new Vertex(100, 200, 0),
+                new Vertex(100, 200, 100),
+                new Vertex(200, 100, 100),
+                new Vertex(200, 200, 100));
         setUpPanel();
         setUpWindow();
         startThread();
@@ -46,10 +46,9 @@ public class GraphicPanel extends JPanel implements Runnable {
             previousTime = currentTime;
 
             if (delta >= frameInterval) {
-                images.forEach(image -> {
-                    image.rotate(1);
-                    image.move(0, 2);
-                });
+                triangle.rotateZAxis(1, 150, 150);
+                triangle.rotateYAxis(1, 150, 50);
+                triangle.rotateXAxis(1, 150, 50);
                 repaint();
 
                 delta = 0.0;
@@ -64,22 +63,8 @@ public class GraphicPanel extends JPanel implements Runnable {
         Graphics2D g2D = (Graphics2D) g;
         g2D.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
-        images.forEach(image -> image.draw(g2D));
         vertices.forEach(vertex -> vertex.draw(g2D));
-
-        g2D.setFont(new Font("Arial", Font.PLAIN, 18));
-        g2D.setColor(Color.red);
-        g2D.drawString("its raining treasure", 400, 100);
-        g2D.setColor(Color.black);
-        g2D.drawOval(380, 100 - 18, 180, 30);
-        g2D.setColor(Color.green);
-        g2D.draw3DRect(400, 400, 100, 100, true);
-        g2D.fill3DRect(400, 400, 100, 100, true);
-        g2D.setColor(Color.black);
-        g2D.drawPolygon(new int[]{500, 600, 500}, new int[]{600, 500, 500}, 3);
-        g2D.drawPolygon(new int[]{random.nextInt(1001), random.nextInt(1001), random.nextInt(1001), random.nextInt(1001)},
-                new int[]{random.nextInt(1001), random.nextInt(1001), random.nextInt(1001), random.nextInt(1001)},
-                4);
+        triangle.draw(g2D);
     }
 
     private void setUpPanel() {
