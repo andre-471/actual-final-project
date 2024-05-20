@@ -32,6 +32,14 @@ public class Vertex {
     public double getZ() {
         return z;
     }
+    
+    public int getIntX() {
+        return (int) x;
+    }
+    
+    public int getIntY() {
+        return (int) y;
+    }
 
     public void translate(int dx, int dy, int dz) {
         x += dx;

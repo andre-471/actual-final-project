@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class GraphicPanel extends JPanel implements Runnable {
-    private static final Random random = new Random();
     private static final int FPS = 60;
     private static final double NS = 1000000000.0;
     private static final int SCREEN_WIDTH = 1000;
@@ -52,8 +50,8 @@ public class GraphicPanel extends JPanel implements Runnable {
             if (delta >= frameInterval) {
                 Vertex center = square.getCenter();
 //                System.out.println(mouseHandler.leftMousePressed());
-                if (mouseHandler.leftMousePressed()) {
-                    Dimension change = mouseHandler.getDifferenceSinceLastPoint(this.getMousePosition());
+                if (mouseHandler.leftMousePressedInScreen()) {
+                    Dimension change = mouseHandler.getDeltaSinceLastHeld();
                     something.rotateYAxis(change.width, 150, 50);
                     something.rotateXAxis(-change.height, 150, 50);
                     square.rotateYAxis(change.width, (int) center.getX(), (int) center.getZ());
@@ -120,7 +118,7 @@ public class GraphicPanel extends JPanel implements Runnable {
         this.requestFocusInWindow();
         keyHandler = new KeyHandler();
         this.addKeyListener(keyHandler);
-        mouseHandler = new MouseHandler();
+        mouseHandler = new MouseHandler(this);
         this.addMouseListener(mouseHandler);
     }
 

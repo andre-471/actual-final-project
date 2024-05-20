@@ -31,15 +31,15 @@ public class RectangularPrism extends Polyhedron {
     @Override
     public void draw(Graphics2D g2D) {
         super.draw(g2D);
-        g2D.drawLine(x1.get2DPoint().x, x1.get2DPoint().y, x6.get2DPoint().x, x6.get2DPoint().y);
-        g2D.drawLine(x2.get2DPoint().x, x2.get2DPoint().y, x5.get2DPoint().x, x5.get2DPoint().y);
-        g2D.drawLine(x3.get2DPoint().x, x3.get2DPoint().y, x8.get2DPoint().x, x8.get2DPoint().y);
-        g2D.drawLine(x4.get2DPoint().x, x4.get2DPoint().y, x7.get2DPoint().x, x7.get2DPoint().y);
-        g2D.drawLine(x1.get2DPoint().x, x1.get2DPoint().y, x4.get2DPoint().x, x4.get2DPoint().y);
-        g2D.drawLine(x5.get2DPoint().x, x5.get2DPoint().y, x8.get2DPoint().x, x8.get2DPoint().y);
+        g2D.drawLine(x1.getIntX(), x1.getIntY(), x6.getIntX(), x6.getIntY());
+        g2D.drawLine(x2.getIntX(), x2.getIntY(), x5.getIntX(), x5.getIntY());
+        g2D.drawLine(x3.getIntX(), x3.getIntY(), x8.getIntX(), x8.getIntY());
+        g2D.drawLine(x4.getIntX(), x4.getIntY(), x7.getIntX(), x7.getIntY());
+        g2D.drawLine(x1.getIntX(), x1.getIntY(), x4.getIntX(), x4.getIntY());
+        g2D.drawLine(x5.getIntX(), x5.getIntY(), x8.getIntX(), x8.getIntY());
 
-        g2D.drawLine(x2.get2DPoint().x, x2.get2DPoint().y, x7.get2DPoint().x, x7.get2DPoint().y);
-        g2D.drawLine(x3.get2DPoint().x, x3.get2DPoint().y, x6.get2DPoint().x, x6.get2DPoint().y);
+        g2D.drawLine(x2.getIntX(), x2.getIntY(), x7.getIntX(), x7.getIntY());
+        g2D.drawLine(x3.getIntX(), x3.getIntY(), x6.getIntX(), x6.getIntY());
         g2D.drawOval((int) center.getX() - 5, (int) center.getY() - 5, 10, 10);
     }
 

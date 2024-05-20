@@ -27,7 +27,7 @@ public class Sphere extends Polyhedron {
     public void draw(Graphics2D g2D) {
         super.draw(g2D);
 
-        g2D.drawArc(x1.get2DPoint().x, y1.get2DPoint().y, radius, radius, 180, 90);
+        g2D.drawArc(x1.getIntX(), y1.getIntY(), radius, radius, 180, 90);
     }
 
     public Vertex getCenter() {
