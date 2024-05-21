@@ -24,7 +24,6 @@ public class MouseHandler extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             leftMouse = false;
-            lastHeldPos = null;
         }
     }
 

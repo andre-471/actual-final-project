@@ -2,23 +2,37 @@ import java.awt.*;
 
 public class Polyhedron {
     private Vertex[] vertices;
+    private Edge[] edges;
+    private Vertex center;
 
-    public Polyhedron(Vertex... vertices) {
+    public Polyhedron(Vertex[] vertices, Edge[] edges, Vertex center) {
+        this.vertices = vertices;
+        this.edges = edges;
+        this.center = center;
+    }
+
+    public Polyhedron() {}
+
+    protected void setVertices(Vertex[] vertices) {
         this.vertices = vertices;
     }
 
-    public void setVertices(Vertex[] vertices) {
-        this.vertices = vertices;
+    protected void setEdges(Edge[] edges) {
+        this.edges = edges;
+    }
+
+    protected void setCenter(Vertex center) {
+        this.center = center;
     }
 
     public void draw(Graphics2D g2D) {
-        for (int i = 0; i < vertices.length; i++) {
-            vertices[i].draw(g2D);
-            Point a = vertices[i].get2DPoint();
-            Point b = vertices[(i + 1) % vertices.length].get2DPoint();
-
-            g2D.drawLine(a.x, a.y, b.x, b.y);
+        for (Vertex vertex : vertices) {
+            vertex.draw(g2D);
         }
+        for (Edge edge : edges) {
+            g2D.drawLine(edge.a().getIntX(),edge.a().getIntY(), edge.b().getIntX(), edge.b().getIntY());
+        }
+        center.draw(g2D);
     }
 
     public void rotateZAxis(double theta, int rX, int rY) {

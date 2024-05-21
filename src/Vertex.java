@@ -14,11 +14,7 @@ public class Vertex {
     }
 
     public void draw(Graphics2D g2D) {
-        g2D.fillRect((int) x, (int) y, 1, 1);
-    }
-
-    public Point get2DPoint() {
-        return new Point((int) x, (int) y);
+        g2D.fillRect((int) x, (int) y, 2, 2);
     }
 
     public double getX() {
@@ -38,6 +34,10 @@ public class Vertex {
     }
     
     public int getIntY() {
+        return (int) y;
+    }
+
+    public int getIntZ() {
         return (int) y;
     }
 

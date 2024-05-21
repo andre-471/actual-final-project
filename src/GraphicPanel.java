@@ -9,7 +9,7 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final int SCREEN_HEIGHT = 1000;
     private ArrayList<Vertex> vertices;
     private Polyhedron something;
-    private RectangularPrism square;
+    private RectangularCuboid square;
     private Sphere sphere;
     private Thread thread;
     private KeyHandler keyHandler;
@@ -26,7 +26,7 @@ public class GraphicPanel extends JPanel implements Runnable {
                 new Vertex(100, 200, 100),
                 new Vertex(200, 100, 100),
                 new Vertex(200, 200, 100));
-        square = new RectangularPrism(new Vertex(500, 500, 50), new Vertex(600, 600, -50));
+        square = new RectangularCuboid(new Vertex(500, 500, 50), new Vertex(600, 600, -50));
 
         sphere = new Sphere(new Vertex(700, 700, 0), 50);
         setUpPanel();
