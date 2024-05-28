@@ -59,6 +59,7 @@ public class GraphicPanel extends JPanel implements Runnable {
                 }
                 if (keyHandler.keyDPressed()) {
                     square.rotateYAxis(1, (int) center.getX(), (int) center.getZ());
+                    vector.rotateYAxis(1, otherCenter.getIntX(), otherCenter.getIntZ());
                 }
                 if (keyHandler.keyQPressed()) {
                     square.rotateZAxis(-1, (int) center.getX(), (int) center.getY());
