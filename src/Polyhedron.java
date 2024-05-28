@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Polyhedron {
+public class Polyhedron implements Drawable {
     private Vertex[] vertices;
     private Edge[] edges;
     private Vertex center;

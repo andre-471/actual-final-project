@@ -30,6 +30,7 @@ public class MouseHandler extends MouseAdapter {
     @Override
     public void mouseEntered(MouseEvent e) {
         inScreen = true;
+        lastHeldPos = e.getPoint();
     }
 
     @Override
