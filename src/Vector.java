@@ -20,7 +20,7 @@ public class Vector implements Drawable {
     public void draw(Graphics2D g2D) {
         g2D.draw(new Line2D.Double(tail.getX(), tail.getY(), head.getX(), head.getY()));
         AffineTransform tx = AffineTransform.getTranslateInstance(head.getX(), head.getY());
-        tx.rotate(Math.atan2(head.getY() - tail.getY(), head.getX() - tail.getY()));
+        tx.rotate(Math.atan2(head.getY() - tail.getY(), head.getX() - tail.getX()));
 
         g2D.fill(tx.createTransformedShape(arrowHead));
     }

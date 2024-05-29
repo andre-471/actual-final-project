@@ -3,6 +3,7 @@ import java.awt.*;
 public class Polyhedron implements Drawable {
     private Vertex[] vertices;
     private Edge[] edges;
+    private Face[] faces;
     private Vertex center;
 
     public Polyhedron(Vertex[] vertices, Edge[] edges, Vertex center) {
@@ -21,6 +22,10 @@ public class Polyhedron implements Drawable {
         this.edges = edges;
     }
 
+    protected void setFaces(Face[] faces) {
+        this.faces = faces;
+    }
+
     protected void setCenter(Vertex center) {
         this.center = center;
     }
@@ -28,6 +33,9 @@ public class Polyhedron implements Drawable {
     public void draw(Graphics2D g2D) {
         for (Vertex vertex : vertices) {
             vertex.draw(g2D);
+        }
+        for (Face face : faces) {
+            face.draw(g2D);
         }
         for (Edge edge : edges) {
             g2D.drawLine(edge.a().getIntX(),edge.a().getIntY(), edge.b().getIntX(), edge.b().getIntY());
