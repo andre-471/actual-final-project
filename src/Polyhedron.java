@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Arrays;
 
 public class Polyhedron implements Drawable {
     private Vertex[] vertices;
@@ -34,6 +35,7 @@ public class Polyhedron implements Drawable {
         for (Vertex vertex : vertices) {
             vertex.draw(g2D);
         }
+//        Arrays.stream(faces).sorted();
         for (Face face : faces) {
             face.draw(g2D);
         }

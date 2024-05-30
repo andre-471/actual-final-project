@@ -13,6 +13,12 @@ public class Vertex {
         this.z = z;
     }
 
+    public Vertex(Vertex otherVertex) {
+        this.x = otherVertex.x;
+        this.y = otherVertex.y;
+        this.z = otherVertex.z;
+    }
+
     public void draw(Graphics2D g2D) {
         g2D.fillRect((int) x, (int) y, 2, 2);
     }
@@ -76,5 +82,11 @@ public class Vertex {
         x = xP;
         y = yP;
         translate(rX, rY, 0);
+    }
+
+    public void translate(double tX, double tY, double tZ) {
+        x += tX;
+        y += tY;
+        z += tZ;
     }
 }

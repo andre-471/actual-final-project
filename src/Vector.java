@@ -2,45 +2,33 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
-public class Vector implements Drawable {
-    private Vertex head;
-    private Vertex tail;
+public class Vector {
+    private double i;
+    private double j;
+    private double k;
     private Polygon arrowHead;
 
-
-    public Vector(Vertex head, Vertex tail, int arrowHeadSize) {
-        this.head = head;
-        this.tail = tail;
-        arrowHead = new Polygon(new int[]{arrowHeadSize, -arrowHeadSize, -arrowHeadSize},
-                new int[]{0, -arrowHeadSize, arrowHeadSize},
-                3);
+    public static Vector normalize(Vector v1, Vector v2) {
+        return new Vector(
+                v1.j * v2.k - v1.k * v2.j,
+                v1.k * v2.i - v1.i * v2.k,
+                v1.i * v2.j - v1.j * v2.i
+        );
     }
 
-    @Override
-    public void draw(Graphics2D g2D) {
-        g2D.draw(new Line2D.Double(tail.getX(), tail.getY(), head.getX(), head.getY()));
-        AffineTransform tx = AffineTransform.getTranslateInstance(head.getX(), head.getY());
-        tx.rotate(Math.atan2(head.getY() - tail.getY(), head.getX() - tail.getX()));
-
-        g2D.fill(tx.createTransformedShape(arrowHead));
+    public Vector(double i, double j, double k) {
+        this.i = i;
+        this.j = j;
+        this.k = k;
     }
 
-    public void rotateZAxis(double theta, int rX, int rY) {
-        head.rotateZAxis(theta, rX, rY);
-        tail.rotateZAxis(theta, rX, rY);
+    public Vector(Vertex p1, Vertex p2) {
+        this.i = p2.getX() - p1.getX();
+        this.j = p2.getY() - p1.getY();
+        this.k = p2.getZ() - p1.getZ();
     }
 
-    public void rotateXAxis(double theta, int rY, int rZ) {
-        head.rotateXAxis(theta, rY, rZ);
-        tail.rotateXAxis(theta, rY, rZ);
-    }
-
-    public void rotateYAxis(double theta, int rX, int rZ) {
-        head.rotateYAxis(theta, rX, rZ);
-        tail.rotateYAxis(theta, rX, rZ);
-    }
-
-    public Vertex getTail() {
-        return tail;
+    private Vector subtract(Vector other) {
+        return new Vector(this.i - other.i, this.j - other.j, this.k - other.k);
     }
 }

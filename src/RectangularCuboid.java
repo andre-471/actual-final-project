@@ -25,18 +25,42 @@ public class RectangularCuboid extends Polyhedron {
         e = new Vertex(a.getX(), a.getY(), g.getZ());
         f = new Vertex(g.getX(), a.getY(), g.getZ());
         h = new Vertex(a.getX(), g.getY(), g.getZ());
+        setOtherItems();
+    }
+
+    private void setOtherItems() {
         setVertices(new Vertex[]{a, b, c, d, e, f, g, h});
         center = new Vertex((g.getX() + a.getX()) / 2, (g.getY() + a.getY()) / 2, (g.getZ() + a.getZ()) / 2);
         setCenter(center);
         setEdges(new Edge[]{new Edge(a, b), new Edge(b, c), new Edge(c, d), new Edge(d, a), new Edge(e, f), new Edge(f, g), new Edge(g, h), new Edge(h, e), new Edge(a, e), new Edge(b, f), new Edge(c, g), new Edge(d, h)});
         setFaces(new Face[]{
                 new Face(Color.BLUE, a, b, d), new Face(Color.BLUE, c, d, b),
-                new Face(Color.RED, e, f, h), new Face(Color.RED, g, h, f),
+                new Face(Color.RED, f, e, g), new Face(Color.RED, h, g, e),
                 new Face(Color.GREEN, b, f, c), new Face(Color.GREEN, g, c, f),
                 new Face(Color.YELLOW, e, a, h), new Face(Color.YELLOW, d, h, a),
-                new Face(Color.ORANGE, e, f, h), new Face(Color.ORANGE, g, h, f),
+                new Face(Color.ORANGE, e, f, a), new Face(Color.ORANGE, b, a, f),
                 new Face(Color.CYAN, d, c, h), new Face(Color.CYAN, g, h, c)
         });
+    }
+
+    public RectangularCuboid(Vertex a, double width, double height, double depth) {
+        super();
+        this.a = a;
+        b = new Vertex(a);
+        b.translate(width, 0, 0);
+        c = new Vertex(a);
+        c.translate(width, height, 0);
+        d = new Vertex(a);
+        d.translate(0, height, 0);
+        e = new Vertex(a);
+        e.translate(0, 0, depth);
+        f = new Vertex(a);
+        f.translate(width, 0, depth);
+        g = new Vertex(a);
+        g.translate(width, height, depth);
+        h = new Vertex(a);
+        h.translate(0, height, depth);
+        setOtherItems();
     }
 
     @Override

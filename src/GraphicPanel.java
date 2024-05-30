@@ -9,7 +9,6 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final int SCREEN_HEIGHT = 1000;
     private ArrayList<Vertex> vertices;
     private RectangularCuboid square;
-    private Vector vector;
     private Thread thread;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
@@ -19,7 +18,6 @@ public class GraphicPanel extends JPanel implements Runnable {
         vertices.add(new Vertex(100, 400, 100));
 
         square = new RectangularCuboid(new Vertex(500, 500, 50), new Vertex(600, 600, -50));
-        vector = new Vector(new Vertex(100, 100, 0), new Vertex(0, 0, 0), 10);
         setUpPanel();
         setUpWindow();
         startThread();
@@ -40,7 +38,6 @@ public class GraphicPanel extends JPanel implements Runnable {
 
             if (delta >= frameInterval) {
                 Vertex center = square.getCenter();
-                Vertex otherCenter = vector.getTail();
                 if (mouseHandler.leftMousePressedInScreen()) {
                     Dimension change = mouseHandler.getDeltaSinceLastHeld();
                     square.rotateYAxis(change.width, (int) center.getX(), (int) center.getZ());
@@ -49,27 +46,21 @@ public class GraphicPanel extends JPanel implements Runnable {
 
                 if (keyHandler.keyWPressed()) {
                     square.rotateXAxis(1, (int) center.getY(), (int) center.getZ());
-                    vector.rotateXAxis(1, otherCenter.getIntY(), otherCenter.getIntZ());
                 }
                 if (keyHandler.keySPressed()) {
                     square.rotateXAxis(-1, (int) center.getY(), (int) center.getZ());
-                    vector.rotateXAxis(-1, otherCenter.getIntY(), otherCenter.getIntZ());
                 }
                 if (keyHandler.keyAPressed()) {
                     square.rotateYAxis(-1, (int) center.getX(), (int) center.getZ());
-                    vector.rotateYAxis(-1, otherCenter.getIntX(), otherCenter.getIntZ());
                 }
                 if (keyHandler.keyDPressed()) {
                     square.rotateYAxis(1, (int) center.getX(), (int) center.getZ());
-                    vector.rotateYAxis(1, otherCenter.getIntX(), otherCenter.getIntZ());
                 }
                 if (keyHandler.keyQPressed()) {
                     square.rotateZAxis(-1, (int) center.getX(), (int) center.getY());
-                    vector.rotateZAxis(-1, otherCenter.getIntX(), otherCenter.getIntY());
                 }
                 if (keyHandler.keyEPressed()) {
                     square.rotateZAxis(1, (int) center.getX(), (int) center.getY());
-                    vector.rotateZAxis(1, otherCenter.getIntX(), otherCenter.getIntY());
                 }
 
                 repaint();
@@ -88,7 +79,6 @@ public class GraphicPanel extends JPanel implements Runnable {
 
         vertices.forEach(vertex -> vertex.draw(g2D));
         square.draw(g2D);
-        vector.draw(g2D);
     }
 
     private void setUpPanel() {
