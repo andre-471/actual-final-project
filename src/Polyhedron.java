@@ -2,70 +2,68 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Polyhedron implements Drawable {
-    private Vertex[] vertices;
-    private Edge[] edges;
     private Face[] faces;
     private Vertex center;
+    private Vertex[] vertices;
 
-    public Polyhedron(Vertex[] vertices, Edge[] edges, Vertex center) {
-        this.vertices = vertices;
-        this.edges = edges;
+    public Polyhedron(Vertex center, Face... faces) {
         this.center = center;
-    }
-
-    public Polyhedron() {}
-
-    protected void setVertices(Vertex[] vertices) {
-        this.vertices = vertices;
-    }
-
-    protected void setEdges(Edge[] edges) {
-        this.edges = edges;
-    }
-
-    protected void setFaces(Face[] faces) {
         this.faces = faces;
     }
 
-    protected void setCenter(Vertex center) {
-        this.center = center;
+    public Polyhedron() {
+
     }
 
+    @Override
     public void draw(Graphics2D g2D) {
-        for (Vertex vertex : vertices) {
-            vertex.draw(g2D);
-        }
-//        Arrays.stream(faces).sorted();
         for (Face face : faces) {
             face.draw(g2D);
-        }
-        for (Edge edge : edges) {
-            g2D.drawLine(edge.a().getIntX(),edge.a().getIntY(), edge.b().getIntX(), edge.b().getIntY());
         }
         center.draw(g2D);
     }
 
-    public void rotateZAxis(double theta, int rX, int rY) {
-        for (Vertex vertex : vertices) {
-            vertex.rotateZAxis(theta, rX, rY);
-        }
+    public void setFaces(Face[] faces) {
+        this.faces = faces;
     }
 
-    public void rotateXAxis(double theta, int rY, int rZ) {
+    public void setCenter(Vertex center) {
+        this.center = center;
+    }
+
+    public void setVertices(Vertex[] vertices) {
+        this.vertices = vertices;
+    }
+
+    public Face[] getFaces() {
+        return faces;
+    }
+
+    public void rotateXAxis(double theta, double rY, double rZ) {
         for (Vertex vertex : vertices) {
             vertex.rotateXAxis(theta, rY, rZ);
         }
+        center.rotateXAxis(theta, rY, rZ);
     }
 
-    public void rotateYAxis(double theta, int rX, int rZ) {
+    public void rotateYAxis(double theta, double rX, double rZ) {
         for (Vertex vertex : vertices) {
             vertex.rotateYAxis(theta, rX, rZ);
         }
+        center.rotateYAxis(theta, rX, rZ);
     }
 
-    public void translate(int dx, int dy, int dz) {
+    public void rotateZAxis(double theta, double rX, double rY) {
+        for (Vertex vertex : vertices) {
+            vertex.rotateZAxis(theta, rX, rY);
+        }
+        center.rotateZAxis(theta, rX, rY);
+    }
+
+    public void translate(double dx, double dy, double dz) {
         for (Vertex vertex : vertices) {
             vertex.translate(dx, dy, dz);
         }
+        center.translate(dx, dy, dz);
     }
 }

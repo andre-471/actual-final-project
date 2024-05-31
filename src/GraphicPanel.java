@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GraphicPanel extends JPanel implements Runnable {
     private static final int FPS = 60;
@@ -77,8 +79,45 @@ public class GraphicPanel extends JPanel implements Runnable {
         Graphics2D g2D = (Graphics2D) g;
         g2D.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
-        vertices.forEach(vertex -> vertex.draw(g2D));
         square.draw(g2D);
+    }
+
+    private void faceDraw() {
+       Face[] faces = square.getFaces();
+
+       double[][] zBuffer = new double[1000][1000];
+        for (double[] doubles : zBuffer) {
+            Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
+        }
+        BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
+
+
+
+        for (Face face : faces) {
+            double minX = Double.POSITIVE_INFINITY;
+            double minY = Double.POSITIVE_INFINITY;
+            double maxX = Double.NEGATIVE_INFINITY;
+            double maxY = Double.NEGATIVE_INFINITY;
+
+            for (Vertex vertex : face.getVertices()) {
+                minX = Math.min(minX, vertex.getX());
+                minY = Math.min(minY, vertex.getY());
+                maxX = Math.max(maxX, vertex.getX());
+                maxY = Math.max(maxY, vertex.getY());
+            }
+            minX = Math.floor(minX);
+            minY = Math.floor(minY);
+            maxX = Math.ceil(maxX);
+            maxY = Math.ceil(maxY);
+            for (int i = (int) minX; i <= maxX; i++) {
+                bufferedImage.setRGB(i, minY, color.getRGB());
+                bufferedImage.setRGB(i, maxY, color.getRGB());
+            }
+            for (int i = (int) minY; i <= maxY; i++) {
+                bufferedImage.setRGB(minX, i, color.getRGB());
+                bufferedImage.setRGB(maxX, i, color.getRGB());
+            }
+        }
     }
 
     private void setUpPanel() {

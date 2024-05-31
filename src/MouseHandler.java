@@ -44,6 +44,9 @@ public class MouseHandler extends MouseAdapter {
 
     public Dimension getDeltaSinceLastHeld() {
         Point currPos = graphicPanel.getMousePosition();
+        if (currPos == null) {
+            return new Dimension(0, 0);
+        }
         int dx = currPos.x - lastHeldPos.x;
         int dy = currPos.y - lastHeldPos.y;
         lastHeldPos = currPos;

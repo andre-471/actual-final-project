@@ -32,7 +32,6 @@ public class RectangularCuboid extends Polyhedron {
         setVertices(new Vertex[]{a, b, c, d, e, f, g, h});
         center = new Vertex((g.getX() + a.getX()) / 2, (g.getY() + a.getY()) / 2, (g.getZ() + a.getZ()) / 2);
         setCenter(center);
-        setEdges(new Edge[]{new Edge(a, b), new Edge(b, c), new Edge(c, d), new Edge(d, a), new Edge(e, f), new Edge(f, g), new Edge(g, h), new Edge(h, e), new Edge(a, e), new Edge(b, f), new Edge(c, g), new Edge(d, h)});
         setFaces(new Face[]{
                 new Face(Color.BLUE, a, b, d), new Face(Color.BLUE, c, d, b),
                 new Face(Color.RED, f, e, g), new Face(Color.RED, h, g, e),
