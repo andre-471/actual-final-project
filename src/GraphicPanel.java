@@ -80,45 +80,54 @@ public class GraphicPanel extends JPanel implements Runnable {
         g2D.addRenderingHints(new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON));
 
         square.draw(g2D);
+
+        Vertex a = new Vertex(0, 100, 0);
+        Vertex b = new Vertex(100, 200, 0);
+        g2D.drawLine(a.getIntX(), a.getIntY(), b.getIntX(), b.getIntY());
+        Vertex c = new Vertex(50, 100, 0);
+        Vertex d = new Vertex(50, 200, 0);
+        c.draw(g2D);
+        d.draw(g2D);
+        double value = (c.getX() - a.getX()) * (b.getY() - a.getY()) - (c.getY() - a.getY()) * (b.getX() - a.getX());
+
+        double valuetwp = (d.getX() - a.getX()) * (b.getY() - a.getY()) - (d.getY() - a.getY()) * (b.getX() - a.getX());
+        System.out.println(value);
+        System.out.println(valuetwp);
     }
 
-    private void faceDraw() {
-       Face[] faces = square.getFaces();
-
-       double[][] zBuffer = new double[1000][1000];
-        for (double[] doubles : zBuffer) {
-            Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
-        }
-        BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
-
-
-
-        for (Face face : faces) {
-            double minX = Double.POSITIVE_INFINITY;
-            double minY = Double.POSITIVE_INFINITY;
-            double maxX = Double.NEGATIVE_INFINITY;
-            double maxY = Double.NEGATIVE_INFINITY;
-
-            for (Vertex vertex : face.getVertices()) {
-                minX = Math.min(minX, vertex.getX());
-                minY = Math.min(minY, vertex.getY());
-                maxX = Math.max(maxX, vertex.getX());
-                maxY = Math.max(maxY, vertex.getY());
-            }
-            minX = Math.floor(minX);
-            minY = Math.floor(minY);
-            maxX = Math.ceil(maxX);
-            maxY = Math.ceil(maxY);
-            for (int i = (int) minX; i <= maxX; i++) {
-                bufferedImage.setRGB(i, minY, color.getRGB());
-                bufferedImage.setRGB(i, maxY, color.getRGB());
-            }
-            for (int i = (int) minY; i <= maxY; i++) {
-                bufferedImage.setRGB(minX, i, color.getRGB());
-                bufferedImage.setRGB(maxX, i, color.getRGB());
-            }
-        }
-    }
+//    private void faceDraw() {
+//       Face[] faces = square.getFaces();
+//
+//        double[][] zBuffer = new double[1000][1000];
+//        for (double[] doubles : zBuffer) {
+//            Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
+//        }
+//        BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
+//
+////        for (Face face : faces) {
+////            double minX = Double.POSITIVE_INFINITY;
+////            double minY = Double.POSITIVE_INFINITY;
+////            double maxX = Double.NEGATIVE_INFINITY;
+////            double maxY = Double.NEGATIVE_INFINITY;
+////
+////            for (Vertex vertex : face.getVertices()) {
+////                minX = Math.min(minX, vertex.getX());
+////                minY = Math.min(minY, vertex.getY());
+////                maxX = Math.max(maxX, vertex.getX());
+////                maxY = Math.max(maxY, vertex.getY());
+////            }
+////            minX = Math.floor(minX);
+////            minY = Math.floor(minY);
+////            maxX = Math.ceil(maxX);
+////            maxY = Math.ceil(maxY);
+////            for (int i = (int) minX; i <= maxX; i++) {
+////                for (int j = (int) minY; j <= maxY; j++) {
+////
+////                }
+////            }
+////
+////        }
+//    }
 
     private void setUpPanel() {
         this.setDoubleBuffered(true);
