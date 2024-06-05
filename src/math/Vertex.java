@@ -1,3 +1,5 @@
+package math;
+
 import java.awt.*;
 
 import static java.lang.Math.*;

@@ -1,3 +1,5 @@
+package math;
+
 public interface Transformable {
     void rotate(double theta, double rX, double rY, double rZ);
     void rotateXAxis(double theta, double rY, double rZ);

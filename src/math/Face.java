@@ -1,5 +1,9 @@
+package math;
+
+import drawing.Drawable;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
+
 
 public class Face implements Drawable {
     private Color color;
@@ -41,6 +45,24 @@ public class Face implements Drawable {
 
     public Vertex[] getVertices() {
         return vertices;
+    }
+
+    public boolean vertexInFace2D(Vertex vertex) {
+        Vector2 what = new Vector2(vertices[0], vertices[1]);
+        Vector2 another = new Vector2(vertices[1], vertices[2]);
+        Vector2 anotherWhat = new Vector2(vertices[2], vertices[0]);
+        Vector2 lastly = new Vector2(vertices[0], vertex);
+        Vector2 finally2 = new Vector2(vertices[1], vertex);
+        Vector2 finally3 = new Vector2(vertices[2], vertex);
+
+        double cross1 = Vector2.cross(what, lastly);
+        double cross2 = Vector2.cross(another, finally2);
+        double cross3 = Vector2.cross(anotherWhat, finally3);
+
+        boolean neg = cross1 <= 0 && cross2 <= 0 && cross3 <= 0;
+        boolean pos = cross1 >= 0 && cross2 >= 0 && cross3 >= 0;
+
+        return neg || pos;
     }
 
     @Override

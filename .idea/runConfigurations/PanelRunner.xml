@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="PanelRunner" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="PanelRunner" />
+    <option name="MAIN_CLASS_NAME" value="drawing.PanelRunner" />
     <module name="actual-final-project" />
     <method v="2">
       <option name="Make" enabled="true" />

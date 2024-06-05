@@ -1,5 +1,7 @@
+package math;
+
+import drawing.Drawable;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Polyhedron implements Drawable {
     private Face[] faces;

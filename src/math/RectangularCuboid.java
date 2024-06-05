@@ -1,5 +1,6 @@
+package math;
+
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 import static java.lang.Math.abs;
 
