@@ -95,8 +95,12 @@ public class GraphicPanel extends JPanel implements Runnable {
             Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
         }
         BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
+        int asd = 0;
+        int asd2 = 0;
+        double zed = 0;
 
-        for (Face face : faces) {
+        for (int ias= 0; ias < 1; ias++) {
+            Face face = faces[ias];
             double minX = Double.POSITIVE_INFINITY;
             double minY = Double.POSITIVE_INFINITY;
             double maxX = Double.NEGATIVE_INFINITY;
@@ -112,6 +116,7 @@ public class GraphicPanel extends JPanel implements Runnable {
             minY = Math.floor(minY);
             maxX = Math.ceil(maxX);
             maxY = Math.ceil(maxY);
+            int count = 0;
             for (int i = (int) minX; i <= maxX; i++) {
                 for (int j = (int) minY; j <= maxY; j++) {
                     if (face.vertexInFace2D(new Vertex(i, j, 0))) {
@@ -123,7 +128,12 @@ public class GraphicPanel extends JPanel implements Runnable {
                         double k = -(NORMAL.x * aas.getX() + NORMAL.y * aas.getY() + NORMAL.z * aas.getZ());
 
                         double z = -(NORMAL.x * i + NORMAL.y * j + k);
-//                        System.out.println(z);
+                        if (count == 0) {
+                            asd = i;
+                            asd2 = j;
+                            zed = z;
+                            count++;
+                        }
                         if (z > zBuffer[i][j]) {
                             zBuffer[i][j] = z;
                             bufferedImage.setRGB(i, j, face.getColor().getRGB());
@@ -134,6 +144,7 @@ public class GraphicPanel extends JPanel implements Runnable {
 
         }
         graphics2D.drawImage(bufferedImage, 0, 0, null);
+        graphics2D.drawString(Double.toString(zed), asd, asd2);
     }
 
     private void setUpPanel() {
