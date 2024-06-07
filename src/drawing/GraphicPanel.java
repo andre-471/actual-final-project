@@ -3,6 +3,7 @@ package drawing;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class GraphicPanel extends JPanel implements Runnable {
     private static final int SCREEN_HEIGHT = 1000;
     private ArrayList<Vertex> vertices;
     private RectangularCuboid square;
+    private RectangularCuboid square2;
     private Thread thread;
     private KeyHandler keyHandler;
     private MouseHandler mouseHandler;
@@ -24,6 +26,8 @@ public class GraphicPanel extends JPanel implements Runnable {
         vertices.add(new Vertex(100, 400, 100));
 
         square = new RectangularCuboid(new Vertex(500, 500, 50), new Vertex(600, 600, -50));
+        square2 = new RectangularCuboid(new Vertex(400,400,60),
+                new Vertex(550, 550, -40));
         setUpPanel();
         setUpWindow();
         startThread();
@@ -89,17 +93,23 @@ public class GraphicPanel extends JPanel implements Runnable {
 
     private void faceDraw(Graphics2D graphics2D) {
         Face[] faces = square.getFaces();
+        faces = Arrays.copyOf(faces, faces.length + 1);
+        faces[faces.length - 1] = new Face(Color.BLACK,
+                new Vertex(500, 500, 51),
+                new Vertex(650, 550, 51),
+                new Vertex(500, 600, 51));
+        faces = concatenate(faces, square2.getFaces());
 
         double[][] zBuffer = new double[1000][1000];
         for (double[] doubles : zBuffer) {
             Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
         }
-        BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage bufferedImage = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
         int asd = 0;
         int asd2 = 0;
         double zed = 0;
 
-        for (int ias= 0; ias < 1; ias++) {
+        for (int ias= 0; ias < faces.length; ias++) {
             Face face = faces[ias];
             double minX = Double.POSITIVE_INFINITY;
             double minY = Double.POSITIVE_INFINITY;
@@ -124,27 +134,67 @@ public class GraphicPanel extends JPanel implements Runnable {
                         Vertex aas = vertices232[0];
                         Vector3 as = new Vector3(vertices232[0], vertices232[1]);
                         Vector3 ad = new Vector3(vertices232[1], vertices232[2]);
-                        Vector3 NORMAL = Vector3.cross(as, ad);
-                        double k = -(NORMAL.x * aas.getX() + NORMAL.y * aas.getY() + NORMAL.z * aas.getZ());
 
-                        double z = -(NORMAL.x * i + NORMAL.y * j + k);
-                        if (count == 0) {
-                            asd = i;
-                            asd2 = j;
-                            zed = z;
-                            count++;
-                        }
-                        if (z > zBuffer[i][j]) {
-                            zBuffer[i][j] = z;
-                            bufferedImage.setRGB(i, j, face.getColor().getRGB());
+                        Vector3 NORMAL = Vector3.cross(as, ad);
+                        if (NORMAL.z != 0) {
+                            double k = -(NORMAL.x * aas.getX() + NORMAL.y * aas.getY() + NORMAL.z * aas.getZ());
+
+                            double z = -(NORMAL.x * i + NORMAL.y * j + k) / NORMAL.z;
+//                        System.out.println("" + z + ", " + NORMAL.x + ", " + NORMAL.y + ", " + NORMAL.z);
+                            if (count == 0) {
+                                asd = i;
+                                asd2 = j;
+                                zed = z;
+                                count++;
+                            }
+                            if (z > zBuffer[i][j]) {
+                                zBuffer[i][j] = z;
+                                bufferedImage.setRGB(i, j, face.getColor().getRGB());
+                            }
                         }
                     }
                 }
             }
+//        face.draw(graphics2D);
+//        Vertex[] vertices232 = face.getVertices();
+//        vertices232[0].draw(graphics2D);
+//        vertices232[1].draw(graphics2D);
+//        vertices232[2].draw(graphics2D);
+//        Vertex a = vertices232[0];
+//            Vertex aas = vertices232[0];
+//            Vector3 as = new Vector3(vertices232[0], vertices232[1]);
+//            Vector3 ad = new Vector3(vertices232[1], vertices232[2]);
+//            Vector3 NORMAL = Vector3.cross(as, ad);
+//            System.out.println("a-b " + as.x + ", " + as.y + ", " + as.z);
+//            System.out.println("b-c " + ad.x + ", " + ad.y + ", " + ad.z);
+//            System.out.println("a " + a.getIntX() + ", " + a.getIntY() + ", " + a.getIntZ());
+//            System.out.println("NORMAL " + NORMAL.x + ", " + NORMAL.y + ", " + NORMAL.z);
+//            double k = -(NORMAL.x * aas.getX() + NORMAL.y * aas.getY() + NORMAL.z * aas.getZ());
+//            System.out.println("k " + k);
+//            double z = -(NORMAL.x * aas.getX() + NORMAL.y * aas.getY() + k) / NORMAL.z;
+//            System.out.println("z " + z);
+//            graphics2D.drawString("a", vertices232[0].getIntX(), vertices232[0].getIntY());
+//        graphics2D.drawString("b", vertices232[1].getIntX(), vertices232[1].getIntY());
+//        graphics2D.drawString("c", vertices232[2].getIntX(), vertices232[2].getIntY());
+//        as.draw(graphics2D);
+//        ad.draw(graphics2D);
+//        NORMAL.draw(graphics2D);
+        graphics2D.drawString(Double.toString(zed), asd, asd2 - 10);
 
         }
         graphics2D.drawImage(bufferedImage, 0, 0, null);
-        graphics2D.drawString(Double.toString(zed), asd, asd2);
+    }
+
+    public <T> T[] concatenate(T[] a, T[] b) {
+        int aLen = a.length;
+        int bLen = b.length;
+
+        @SuppressWarnings("unchecked")
+        T[] c = (T[]) Array.newInstance(a.getClass().getComponentType(), aLen + bLen);
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+
+        return c;
     }
 
     private void setUpPanel() {

@@ -46,7 +46,7 @@ public class Vertex {
     }
 
     public int getIntZ() {
-        return (int) y;
+        return (int) z;
     }
 
     public void translate(int dx, int dy, int dz) {

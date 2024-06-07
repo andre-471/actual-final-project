@@ -26,6 +26,7 @@ public class RectangularCuboid extends Polyhedron {
         e = new Vertex(a.getX(), a.getY(), g.getZ());
         f = new Vertex(g.getX(), a.getY(), g.getZ());
         h = new Vertex(a.getX(), g.getY(), g.getZ());
+        System.out.println(a.getIntZ());
         setOtherItems();
     }
 
