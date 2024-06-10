@@ -32,7 +32,7 @@ public class PolyManager {
     public void drawAllFaces(Graphics2D g2D) {
         double[][] zBuffer = new double[graphicPanel.getWidth()][graphicPanel.getHeight()]; // BREAKS IF GRAPHICPANEL IS TOO SMALL and other faces are outside of range size
         for (double[] doubles : zBuffer) {
-            Arrays.fill(doubles, Double.NEGATIVE_INFINITY);
+            Arrays.fill(doubles, Double.POSITIVE_INFINITY);
         }
         BufferedImage drawn = new BufferedImage(graphicPanel.getWidth(), graphicPanel.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for (Polyhedron polyhedron : polyhedra) {
@@ -60,7 +60,7 @@ public class PolyManager {
                                 double k = -(normal.x * p1.getX() + normal.y * p1.getY() + normal.z * p1.getZ()); // solving for k in ax + by + cz + k = 0
                                 double z = -(normal.x * i + normal.y * j + k) / normal.z; // solving for z
 
-                                if (z > zBuffer[i][j]) { // if z value of specific pixel is greater than the last pixel iterated over
+                                if (z < zBuffer[i][j]) { // if z value of specific pixel is less than the last pixel iterated over
                                     zBuffer[i][j] = z;
                                     drawn.setRGB(i, j, face.getColor().getRGB());
                                 }

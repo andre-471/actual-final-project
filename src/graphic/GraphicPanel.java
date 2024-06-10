@@ -27,9 +27,9 @@ public class GraphicPanel extends JPanel implements Runnable {
         vertices = new ArrayList<>();
         vertices.add(new Vertex(100, 400, 100));
 
-        square = new RectangularCuboid(new Vertex(500, 500, 50), new Vertex(600, 600, -50));
-        square2 = new RectangularCuboid(new Vertex(400,400,60),
-                new Vertex(550, 550, -40));
+        square = new RectangularCuboid(new Vertex(500, 500, -50), new Vertex(600, 600, 50));
+        square2 = new RectangularCuboid(new Vertex(400,400,-60),
+                new Vertex(550, 550, 40));
         setUpOthers();
         setUpPanel();
         setUpWindow();
@@ -55,23 +55,23 @@ public class GraphicPanel extends JPanel implements Runnable {
                 Vertex center = square.getCenter();
                 if (mouseHandler.leftMousePressedInScreen()) {
                     Dimension change = mouseHandler.getDeltaSinceLastHeld();
-                    square.rotateYAxis(change.width, (int) center.getX(), (int) center.getZ());
-                    square.rotateXAxis(-change.height, (int) center.getY(), (int) center.getZ());
-                    square2.rotateYAxis(change.width, (int) square2.getCenter().getX(), (int) square2.getCenter().getZ());
-                    square2.rotateXAxis(-change.height, (int) square2.getCenter().getY(), (int) square2.getCenter().getZ());
+                    square.rotateYAxis(-change.width, (int) center.getX(), (int) center.getZ());
+                    square.rotateXAxis(change.height, (int) center.getY(), (int) center.getZ());
+                    square2.rotateYAxis(-change.width, (int) square2.getCenter().getX(), (int) square2.getCenter().getZ());
+                    square2.rotateXAxis(change.height, (int) square2.getCenter().getY(), (int) square2.getCenter().getZ());
                 }
 
                 if (keyHandler.keyWPressed()) {
-                    square.rotateXAxis(1, (int) center.getY(), (int) center.getZ());
-                }
-                if (keyHandler.keySPressed()) {
                     square.rotateXAxis(-1, (int) center.getY(), (int) center.getZ());
                 }
+                if (keyHandler.keySPressed()) {
+                    square.rotateXAxis(1, (int) center.getY(), (int) center.getZ());
+                }
                 if (keyHandler.keyAPressed()) {
-                    square.rotateYAxis(-1, (int) center.getX(), (int) center.getZ());
+                    square.rotateYAxis(1, (int) center.getX(), (int) center.getZ());
                 }
                 if (keyHandler.keyDPressed()) {
-                    square.rotateYAxis(1, (int) center.getX(), (int) center.getZ());
+                    square.rotateYAxis(-1, (int) center.getX(), (int) center.getZ());
                 }
                 if (keyHandler.keyQPressed()) {
                     square.rotateZAxis(-1, (int) center.getX(), (int) center.getY());
@@ -97,6 +97,7 @@ public class GraphicPanel extends JPanel implements Runnable {
 //        square.draw(g2D);
         polyManager.drawAllFaces(g2D);
         polyManager.showPoints(g2D);
+
     }
 
     private void setUpOthers() {
