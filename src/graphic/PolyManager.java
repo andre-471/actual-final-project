@@ -46,9 +46,11 @@ public class PolyManager {
 
                 int minX = (int) ceil(min(p1.getX(), min(p2.getX(), p3.getX())));
                 int minY = (int) ceil(min(p1.getY(), min(p2.getY(), p3.getY())));
+                int minZ = (int) ceil(max(p1.getZ(), max(p2.getZ(), p3.getZ())));
                 int maxX = (int) floor(max(p1.getX(), max(p2.getX(), p3.getX())));
                 int maxY = (int) floor(max(p1.getY(), max(p2.getY(), p3.getY())));
-                
+                int maxZ = (int) floor(max(p1.getZ(), max(p2.getZ(), p3.getZ())));
+
                 for (int i = minX; i <= maxX; i++) {
                     for (int j = minY; j <= maxY; j++) {
                         if (face.vertexInFace2D(new Vertex(i, j, 0))) {
