@@ -1,6 +1,6 @@
-package math;
+package logic;
 
-import drawing.Drawable;
+import graphic.Drawable;
 import java.awt.*;
 
 public class Polyhedron implements Drawable {
@@ -12,7 +12,6 @@ public class Polyhedron implements Drawable {
         this.center = center;
         this.faces = faces;
     }
-
     public Polyhedron() {
 
     }

@@ -1,4 +1,4 @@
-package math;
+package logic;
 
 public interface Transformable {
     void rotate(double theta, double rX, double rY, double rZ);

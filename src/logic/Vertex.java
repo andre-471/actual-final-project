@@ -1,4 +1,4 @@
-package math;
+package logic;
 
 import java.awt.*;
 
@@ -38,21 +38,15 @@ public class Vertex {
     }
     
     public int getIntX() {
-        return (int) x;
+        return (int) round(x);
     }
     
     public int getIntY() {
-        return (int) y;
+        return (int) round(y);
     }
 
     public int getIntZ() {
-        return (int) z;
-    }
-
-    public void translate(int dx, int dy, int dz) {
-        x += dx;
-        y += dy;
-        z += dz;
+        return (int) round(z);
     }
 
     public void rotateXAxis(double theta, double rY, double rZ) {

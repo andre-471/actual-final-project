@@ -1,4 +1,4 @@
-package math;
+package logic;
 
 public class Vector3 extends Vector2 {
     public double z;

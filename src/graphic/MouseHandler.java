@@ -1,4 +1,4 @@
-package drawing;
+package graphic;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

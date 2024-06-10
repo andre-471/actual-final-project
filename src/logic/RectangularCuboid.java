@@ -1,4 +1,4 @@
-package math;
+package logic;
 
 import java.awt.*;
 

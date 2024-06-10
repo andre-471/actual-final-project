@@ -1,4 +1,4 @@
-package drawing;
+package graphic;
 
 public class PanelRunner {
     public static void main(String[] args) {

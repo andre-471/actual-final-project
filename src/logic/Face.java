@@ -1,6 +1,6 @@
-package math;
+package logic;
 
-import drawing.Drawable;
+import graphic.Drawable;
 
 import java.awt.*;
 
@@ -8,12 +8,17 @@ import java.awt.*;
 public class Face implements Drawable {
     private Color color;
     private Vertex[] vertices;
+    private Vertex p1; 
+    private Vertex p2; 
+    private Vertex p3;
 
-    public Face (Color color, Vertex p1, Vertex p2, Vertex p3) {
+    public Face(Color color, Vertex p1, Vertex p2, Vertex p3) {
         this.color = color;
-        this.vertices = new Vertex[]{p1, p2, p3};
+        vertices = new Vertex[]{p1, p2, p3};
+        this.p1 = p1;
+        this.p2 = p2;
+        this.p3 = p3;
     }
-
 
     public void rotateXAxis(double theta, double rY, double rZ) {
         for (Vertex vertex : vertices) {
@@ -47,27 +52,48 @@ public class Face implements Drawable {
         return vertices;
     }
 
+    public Vertex getP1() {
+        return p1;
+    }
+
+    public Vertex getP2() {
+        return p2;
+    }
+
+    public Vertex getP3() {
+        return p3;
+    }
+
     public boolean vertexInFace2D(Vertex vertex) {
-        Vector2 what = new Vector2(vertices[0], vertices[1]);
-        Vector2 another = new Vector2(vertices[1], vertices[2]);
-        Vector2 anotherWhat = new Vector2(vertices[2], vertices[0]);
-        Vector2 lastly = new Vector2(vertices[0], vertex);
-        Vector2 finally2 = new Vector2(vertices[1], vertex);
-        Vector2 finally3 = new Vector2(vertices[2], vertex);
+        Vector2 v12 = new Vector2(p1, p2);
+        Vector2 v23 = new Vector2(p2, p3);
+        Vector2 v31 = new Vector2(p3, p1);
+        Vector2 v1v = new Vector2(p1, vertex);
+        Vector2 v2v = new Vector2(p2, vertex);
+        Vector2 v3v = new Vector2(p3, vertex);
 
-        double cross1 = Vector2.cross(what, lastly);
-        double cross2 = Vector2.cross(another, finally2);
-        double cross3 = Vector2.cross(anotherWhat, finally3);
+        double c1 = Vector2.cross(v12, v1v);
+        double c2 = Vector2.cross(v23, v2v);
+        double c3 = Vector2.cross(v31, v3v);
 
-        boolean neg = cross1 <= 0 && cross2 <= 0 && cross3 <= 0;
-        boolean pos = cross1 >= 0 && cross2 >= 0 && cross3 >= 0;
+        return c1 >= 0 && c2 >= 0 && c3 >= 0;
+    }
 
-        return neg || pos;
+    public boolean facingCamera() {
+        Vector2 v12 = new Vector2(p1, p2);
+        Vector2 v23 = new Vector2(p2, p3);
+        Vector2 v31 = new Vector2(p3, p1);
+
+        double c1 = Vector2.cross(v12, v23);
+        double c2 = Vector2.cross(v23, v31);
+        double c3 = Vector2.cross(v31, v12);
+
+        return c1 >= 0 && c2 >= 0 && c3 >= 0;
     }
 
     @Override
     public void draw(Graphics2D g2D) {
-        Polygon polygon = new Polygon();
+        java.awt.Polygon polygon = new java.awt.Polygon();
         for (Vertex vertex : vertices) {
             polygon.addPoint(vertex.getIntX(), vertex.getIntY());
         }
@@ -75,6 +101,5 @@ public class Face implements Drawable {
         g2D.fillPolygon(polygon);
         g2D.setColor(Color.BLACK);
         g2D.drawPolygon(polygon);
-
     }
 }
