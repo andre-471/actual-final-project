@@ -1,11 +1,9 @@
 package logic;
 
-import graphic.Drawable;
-
 import java.awt.*;
 
 
-public class Face implements Drawable {
+public class Face {
     private Color color;
     private Vertex[] vertices;
     private Vertex p1; 
@@ -89,17 +87,5 @@ public class Face implements Drawable {
         double c3 = Vector2.cross(v31, v12);
 
         return c1 >= 0 && c2 >= 0 && c3 >= 0;
-    }
-
-    @Override
-    public void draw(Graphics2D g2D) {
-        java.awt.Polygon polygon = new java.awt.Polygon();
-        for (Vertex vertex : vertices) {
-            polygon.addPoint(vertex.getIntX(), vertex.getIntY());
-        }
-        g2D.setColor(color);
-        g2D.fillPolygon(polygon);
-        g2D.setColor(Color.BLACK);
-        g2D.drawPolygon(polygon);
     }
 }

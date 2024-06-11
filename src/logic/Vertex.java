@@ -21,10 +21,6 @@ public class Vertex {
         this.z = otherVertex.z;
     }
 
-    public void draw(Graphics2D g2D) {
-        g2D.fillRect((int) x, (int) y, 2, 2);
-    }
-
     public double getX() {
         return x;
     }

@@ -1,27 +1,17 @@
 package logic;
 
-import graphic.Drawable;
-import java.awt.*;
-
-public class Polyhedron implements Drawable {
+public class Polyhedron {
     private Face[] faces;
     private Vertex center;
     private Vertex[] vertices;
 
-    public Polyhedron(Vertex center, Face... faces) {
+    protected Polyhedron(Vertex center, Face... faces) {
         this.center = center;
         this.faces = faces;
     }
+
     public Polyhedron() {
 
-    }
-
-    @Override
-    public void draw(Graphics2D g2D) {
-        for (Face face : faces) {
-            face.draw(g2D);
-        }
-        center.draw(g2D);
     }
 
     public void setFaces(Face[] faces) {
@@ -39,6 +29,10 @@ public class Polyhedron implements Drawable {
     public Face[] getFaces() {
         return faces;
     }
+
+    public Vertex getCenter() {
+        return center;
+}
 
     public void rotateXAxis(double theta, double rY, double rZ) {
         for (Vertex vertex : vertices) {
