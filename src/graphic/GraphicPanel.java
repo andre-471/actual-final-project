@@ -22,7 +22,7 @@ public class GraphicPanel extends JPanel implements Runnable {
         setUpPanel();
         setUpOthers();
         setUpWindow();
-        tileManager.generateMap(3);
+        tileManager.generateMap(2);
         startThread();
 
     }
@@ -61,7 +61,7 @@ public class GraphicPanel extends JPanel implements Runnable {
     }
 
     private void setUpOthers() {
-        tileManager = new TileManager(this, keyHandler, mouseHandler, 50);
+        tileManager = new TileManager(this, keyHandler, mouseHandler, 120);
     }
 
     private void setUpPanel() {

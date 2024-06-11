@@ -36,8 +36,7 @@ public class TileManager {
         for (int z = 0; z < tiles.length; z++) {
             for (int y = 0; y < tiles[z].length; y++) {
                 for (int x = 0; x < tiles[z][y].length; x++) {
-                    tiles[z][y][x] = new Tile(new Vertex(topLeft.getX() + (x * (widthPerTile + gap)), topLeft.getY() + (y * (widthPerTile + gap)), topLeft.getZ() + (z * (widthPerTile + gap))),
-                            widthPerTile, widthPerTile, widthPerTile);
+                    tiles[z][y][x] = new Tile(new Vertex(topLeft.getX() + (x * (widthPerTile + gap)), topLeft.getY() + (y * (widthPerTile + gap)), topLeft.getZ() + (z * (widthPerTile + gap))), widthPerTile, widthPerTile, widthPerTile);
                 }
             }
         }
@@ -60,12 +59,10 @@ public class TileManager {
                         Vertex p2 = face.getP2();
                         Vertex p3 = face.getP3();
 
-                        int minX = (int) ceil(min(p1.getX(), min(p2.getX(), p3.getX())));
-                        int minY = (int) ceil(min(p1.getY(), min(p2.getY(), p3.getY())));
-                        int minZ = (int) ceil(max(p1.getZ(), max(p2.getZ(), p3.getZ())));
-                        int maxX = (int) floor(max(p1.getX(), max(p2.getX(), p3.getX())));
-                        int maxY = (int) floor(max(p1.getY(), max(p2.getY(), p3.getY())));
-                        int maxZ = (int) floor(max(p1.getZ(), max(p2.getZ(), p3.getZ())));
+                        int minX = (int) floor(min(p1.getX(), min(p2.getX(), p3.getX())));
+                        int minY = (int) floor(min(p1.getY(), min(p2.getY(), p3.getY())));
+                        int maxX = (int) ceil(max(p1.getX(), max(p2.getX(), p3.getX())));
+                        int maxY = (int) ceil(max(p1.getY(), max(p2.getY(), p3.getY())));
 
                         for (int i = minX; i <= maxX; i++) {
                             for (int j = minY; j <= maxY; j++) {
@@ -74,17 +71,17 @@ public class TileManager {
                                     Vector3 v23 = new Vector3(p2, p3);
                                     Vector3 normal = Vector3.cross(v12, v23); // a, b, c as normal vector
 
-                                        if (i < zBuffer.length && j < zBuffer[0].length && i >= 0 && j >= 0) {
-                                            if (normal.z != 0) {
-                                                double k = -(normal.x * p1.getX() + normal.y * p1.getY() + normal.z * p1.getZ()); // solving for k in ax + by + cz + k = 0
-                                                double z = -(normal.x * i + normal.y * j + k) / normal.z; // solving for z
+                                    if (i < zBuffer.length && j < zBuffer[0].length && i >= 0 && j >= 0) {
+                                        if (normal.z != 0) {
+                                            double k = -(normal.x * p1.getX() + normal.y * p1.getY() + normal.z * p1.getZ()); // solving for k in ax + by + cz + k = 0
+                                            double z = -(normal.x * i + normal.y * j + k) / normal.z; // solving for z
 
-                                                if (z < zBuffer[i][j]) { // if z value of specific pixel is less than the last pixel iterated over
-                                                    zBuffer[i][j] = z;
-                                                    drawn.setRGB(i, j, face.getColor().getRGB());
-                                                }
+                                            if (z < zBuffer[i][j]) { // if z value of specific pixel is less than the last pixel iterated over
+                                                zBuffer[i][j] = z;
+                                                drawn.setRGB(i, j, face.getColor().getRGB());
                                             }
                                         }
+                                    }
                                 }
                             }
                         }
@@ -95,49 +92,79 @@ public class TileManager {
         g2D.drawImage(drawn, 0, 0, null);
 
     }
-    
-    public void update() {
-        Dimension change = mouseHandler.getDeltaSinceLastHeld();
-         for (Tile[][] tile2D : tiles) {
-             for (Tile[] tile1D : tile2D) {
-                 for (Tile tile : tile1D) {
-                     tile.rotateYAxis(-change.width, center.getX(), center.getZ());
-                     tile.rotateXAxis(change.height, center.getY(), center.getZ());
 
-                     if (keyHandler.keyWPressed()) {
-                         tile.rotateXAxis(-1, center.getY(), center.getZ());
-                     }
-                     if (keyHandler.keySPressed()) {
-                         tile.rotateXAxis(1, center.getY(), center.getZ());
-                     }
-                     if (keyHandler.keyAPressed()) {
-                         tile.rotateYAxis(-1, center.getX(), center.getZ());
-                     }
-                     if (keyHandler.keyDPressed()) {
-                         tile.rotateYAxis(1, center.getX(), center.getZ());
-                     }
-                     if (keyHandler.keyQPressed()) {
-                         tile.rotateZAxis(-1, center.getX(), center.getY());
-                     }
-                     if (keyHandler.keyEPressed()) {
-                         tile.rotateZAxis(1, center.getX(), center.getY());
-                     }
-                 }
-             }
-         }
+    public void update() {
+        boolean up = keyHandler.upArrowPressed();
+        boolean down = keyHandler.downArrowPressed();
+        boolean left = keyHandler.leftArrowPressed();
+        boolean right = keyHandler.rightArrowPressed();
+        Dimension change = mouseHandler.getDeltaSinceLastHeld();
+        if (up) {
+            center.translate(0, -2, 0);
+        }
+        if (down) {
+            center.translate(0, 2, 0);
+        }
+        if (left) {
+            center.translate(-2, 0, 0);
+        }
+        if (right) {
+            center.translate(2, 0, 0);
+        }
+        for (Tile[][] tile2D : tiles) {
+            for (Tile[] tile1D : tile2D) {
+                for (Tile tile : tile1D) {
+                    tile.rotateYAxis(-change.width, center.getX(), center.getZ());
+                    tile.rotateXAxis(change.height, center.getY(), center.getZ());
+
+                    if (keyHandler.keyWPressed()) {
+                        tile.rotateXAxis(-1, center.getY(), center.getZ());
+                    }
+                    if (keyHandler.keySPressed()) {
+                        tile.rotateXAxis(1, center.getY(), center.getZ());
+                    }
+                    if (keyHandler.keyAPressed()) {
+                        tile.rotateYAxis(1, center.getX(), center.getZ());
+                    }
+                    if (keyHandler.keyDPressed()) {
+                        tile.rotateYAxis(-1, center.getX(), center.getZ());
+                    }
+                    if (keyHandler.keyQPressed()) {
+                        tile.rotateZAxis(-1, center.getX(), center.getY());
+                    }
+                    if (keyHandler.keyEPressed()) {
+                        tile.rotateZAxis(1, center.getX(), center.getY());
+                    }
+                    if (up) {
+                        tile.translate(0, -2, 0);
+                    }
+                    if (down) {
+                        tile.translate(0, 2, 0);
+                    }
+                    if (left) {
+
+                        tile.translate(-2, 0, 0);
+                    }
+                    if (right) {
+
+                        tile.translate(2, 0, 0);
+                    }
+                }
+            }
+        }
     }
-    
+
     public void showPoints(Graphics2D g2D) {
-         for (Tile[][] tile2D : tiles) {
-             for (Tile[] tile1D : tile2D) {
-                 for (Tile tile : tile1D) {
-                     for (Face face : tile.getFaces()) {
-                         for (Vertex vertex : face.getVertices()) {
-                             g2D.drawString("(" + vertex.getIntX() + ", " + vertex.getIntY() + ", " + vertex.getIntZ() + ")", vertex.getIntX(), vertex.getIntY() - 10);
-                         }
-                     }
-                 }
-             }
-         }
+        for (Tile[][] tile2D : tiles) {
+            for (Tile[] tile1D : tile2D) {
+                for (Tile tile : tile1D) {
+                    for (Face face : tile.getFaces()) {
+                        for (Vertex vertex : face.getVertices()) {
+                            g2D.drawString("(" + vertex.getIntX() + ", " + vertex.getIntY() + ", " + vertex.getIntZ() + ")", vertex.getIntX(), vertex.getIntY() - 10);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
